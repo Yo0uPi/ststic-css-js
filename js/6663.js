@@ -22,7 +22,7 @@ function fish() {
 
 var RENDERER = {
     POINT_INTERVAL: 5,
-    FISH_COUNT: 3, // 鱼的数量调整为 3
+    FISH_COUNT: 3, // 鱼的数量
     MAX_INTERVAL_COUNT: 50,
     INIT_HEIGHT_RATE: 0.5,
     THRESHOLD: 50,
@@ -154,6 +154,11 @@ var RENDERER = {
         requestAnimationFrame(this.render);
         this.controlStatus();
         this.context.clearRect(0, 0, this.width, this.height);
+        
+        // 设置水的颜色，这里使用淡蓝色
+        this.context.fillStyle = 'rgba(135, 206, 250, 0.5)'; // 淡蓝色
+        this.context.fillRect(0, 0, this.width, this.height);
+
         for (var i = 0, count = this.fishes.length; i < count; i++) {
             this.fishes[i].render(this.context);
         }
