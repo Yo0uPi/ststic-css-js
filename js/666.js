@@ -7,7 +7,6 @@ function fish() {
             height: "160px",
             margin: 0,
             padding: 0,
-            "background-color": "rgba(135, 206, 235, 0.5)", // 背景色
         }),
         $("#footer-wrap").css({
             position: "absolute",
@@ -155,8 +154,6 @@ var RENDERER = {
         requestAnimationFrame(this.render);
         this.controlStatus();
         this.context.clearRect(0, 0, this.width, this.height);
-        this.context.fillStyle = 'rgba(135, 206, 235, 0.5)'; // 背景色
-        this.context.fillRect(0, 0, this.width, this.height); // 填充背景
         for (var i = 0, count = this.fishes.length; i < count; i++) {
             this.fishes[i].render(this.context);
         }
@@ -262,7 +259,7 @@ FISH.prototype = {
         const r = Math.floor(Math.random() * 256);
         const g = Math.floor(Math.random() * 256);
         const b = Math.floor(Math.random() * 256);
-        return `rgba(${r}, ${g}, ${b}, 0.8)`; // 使用rgba来实现透明效果
+        return `rgba(${r}, ${g}, ${b}, 0.8)`; // 透明效果
     },
     reverseVertical: function () {
         this.isOut = !this.isOut;
