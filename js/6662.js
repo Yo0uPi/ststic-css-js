@@ -22,7 +22,7 @@ function fish() {
 
 var RENDERER = {
     POINT_INTERVAL: 5,
-    FISH_COUNT: 6, // 鱼的数量
+    FISH_COUNT: 3, // 鱼的数量调整为 3
     MAX_INTERVAL_COUNT: 50,
     INIT_HEIGHT_RATE: 0.5,
     THRESHOLD: 50,
@@ -255,11 +255,15 @@ FISH.prototype = {
         return min + (max - min) * Math.random();
     },
     getRandomColor: function () {
-        // 随机生成颜色
-        const r = Math.floor(Math.random() * 256);
-        const g = Math.floor(Math.random() * 256);
-        const b = Math.floor(Math.random() * 256);
-        return `rgba(${r}, ${g}, ${b}, 0.8)`; // 透明效果
+        // 使用与背景协调的柔和颜色
+        const colors = [
+            'rgba(255, 255, 255, 0.5)', // 白色
+            'rgba(200, 200, 255, 0.7)', // 浅蓝色
+            'rgba(255, 200, 200, 0.5)', // 浅粉色
+            'rgba(255, 255, 200, 0.6)', // 浅黄色
+            'rgba(200, 255, 200, 0.5)'  // 浅绿色
+        ];
+        return colors[Math.floor(Math.random() * colors.length)];
     },
     reverseVertical: function () {
         this.isOut = !this.isOut;
