@@ -1,27 +1,29 @@
-// 鱼的初始化
 function fish() {
-    return ($("footer").append('<div class="fish_container" id="jsi-flying-fish-container"></div>'),
-    $(".fish_container").css({
-        "z-index": -1,
-        width: "100%",
-        height: "160px",
-        margin: 0,
-        padding: 0,
-        "background-color": "rgba(135, 206, 235, 0.5)" // 设置背景色，给水面效果
-    }),
-    $("#footer-wrap").css({
-        position: "absolute",
-        "text-align": "center",
-        top: 0,
-        right: 0,
-        left: 0,
-        bottom: 0,
-    }), this);
+    return (
+        $("footer").append('<div class="fish_container" id="jsi-flying-fish-container"></div>'),
+        $(".fish_container").css({
+            "z-index": -1,
+            width: "100%",
+            height: "160px",
+            margin: 0,
+            padding: 0,
+            "background-color": "rgba(135, 206, 235, 0.5)", // 背景色
+        }),
+        $("#footer-wrap").css({
+            position: "absolute",
+            "text-align": "center",
+            top: 0,
+            right: 0,
+            left: 0,
+            bottom: 0,
+        }),
+        this
+    );
 }
 
 var RENDERER = {
     POINT_INTERVAL: 5,
-    FISH_COUNT: 6, // 增加鱼的数量
+    FISH_COUNT: 6, // 鱼的数量
     MAX_INTERVAL_COUNT: 50,
     INIT_HEIGHT_RATE: 0.5,
     THRESHOLD: 50,
@@ -34,7 +36,7 @@ var RENDERER = {
     },
     setParameters: function () {
         this.$window = $(window);
-        this.$container = $('#jsi-flying-fish-container');
+        this.$container = $("#jsi-flying-fish-container");
         this.$canvas = $('<canvas />');
         this.context = this.$canvas.appendTo(this.$container).get(0).getContext('2d');
         this.points = [];
@@ -71,7 +73,7 @@ var RENDERER = {
         this.fishCount = this.FISH_COUNT * this.width / 500 * this.height / 500;
         this.$canvas.attr({ width: this.width, height: this.height });
         this.reverse = false;
-        this.fishes.push(new FISH(this));
+        this.fishes.push(new FISH(this)); // 初始化一条鱼
         this.createSurfacePoints();
     },
     watchWindowSize: function () {
@@ -88,7 +90,7 @@ var RENDERER = {
     judgeToStopResize: function () {
         var width = this.$window.width(),
             height = this.$window.height(),
-            stopped = (width == this.tmpWidth && height == this.tmpHeight);
+            stopped = width == this.tmpWidth && height == this.tmpHeight;
         this.tmpWidth = width;
         this.tmpHeight = height;
         if (stopped) {
@@ -103,7 +105,10 @@ var RENDERER = {
     },
     getAxis: function (event) {
         var offset = this.$container.offset();
-        return { x: event.clientX - offset.left + this.$window.scrollLeft(), y: event.clientY - offset.top + this.$window.scrollTop() };
+        return {
+            x: event.clientX - offset.left + this.$window.scrollLeft(),
+            y: event.clientY - offset.top + this.$window.scrollTop(),
+        };
     },
     startEpicenter: function (event) {
         this.axis = this.getAxis(event);
@@ -150,7 +155,8 @@ var RENDERER = {
         requestAnimationFrame(this.render);
         this.controlStatus();
         this.context.clearRect(0, 0, this.width, this.height);
-        this.context.fillStyle = 'hsl(0, 0%, 95%)'; // 水面颜色
+        this.context.fillStyle = 'rgba(135, 206, 235, 0.5)'; // 背景色
+        this.context.fillRect(0, 0, this.width, this.height); // 填充背景
         for (var i = 0, count = this.fishes.length; i < count; i++) {
             this.fishes[i].render(this.context);
         }
@@ -165,7 +171,7 @@ var RENDERER = {
         this.context.closePath();
         this.context.fill();
         this.context.restore();
-    }
+    },
 };
 
 // 定义水面点
@@ -218,10 +224,10 @@ SURFACE_POINT.prototype = {
             this.next.fy += this.force.next;
         }
         context.lineTo(this.x, this.renderer.height - this.height);
-    }
+    },
 };
 
-// 定义鱼的类
+// 定义鱼
 var FISH = function (renderer) {
     this.renderer = renderer;
     this.init();
@@ -343,5 +349,6 @@ FISH.prototype = {
 };
 
 $(function () {
+    fish(); // 确保调用 fish 函数来初始化动画
     RENDERER.init();
 });
